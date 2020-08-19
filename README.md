@@ -1,4 +1,4 @@
-# BackEnd Build Week API Starter
+# Sleep Tracker API
 
 **This api is made to work with the project named above built by a team consisting of UI/UX Web, React FrontEnd, and Backend developers**
 
