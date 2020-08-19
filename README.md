@@ -107,7 +107,7 @@ ___
 
 <br>
 
-### Restricted Endpoints (Require Token)
+## Restricted Endpoints (Require Token)
 
 Using Authentication Token for the endpoints beyond this point. Make sure to add the keyword **Bearer** with the token in the Authorization header.
 
@@ -129,7 +129,7 @@ Either way you use the token, just be sure to add "Bearer" before the token sepa
 <br><br>
 
 
-# Users
+### Users
 <br>
 
 | Method | URL            | Description                                                                   |
