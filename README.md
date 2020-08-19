@@ -105,8 +105,31 @@ ____
 
 ___
 
+<br>
 
-### Users
+### Restricted Endpoints (Require Token)
+
+Using Authentication Token for the endpoints beyond this point. Make sure to add the keyword **Bearer** with the token in the Authorization header.
+
+For Example:
+```js
+// If creating an axiosWithAuth file
+axios.create({
+    headers: {
+        Authorization: `Bearer ${token}`,
+    },
+});
+
+// If adding the authorization on the axios call
+axios.get("https://webpt15-sleep-tracker-api.herokuapp.com/api/users", {headers: {Authorization: `Bearer ${token}` } });
+```
+
+Either way you use the token, just be sure to add "Bearer" before the token separated by a space.
+
+<br><br>
+
+
+# Users
 <br>
 
 | Method | URL            | Description                                                                   |
