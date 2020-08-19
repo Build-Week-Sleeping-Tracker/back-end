@@ -18,17 +18,24 @@ function findBy(filter) {
 }
 
 function findById(id) {
-    return null;
+    return db("entries").where({ id: id }).first();
 }
 
 function add(entry) {
-    return null;
+    return db("entries").insert(entry, "id")
+                .then(ids => {
+                    return findById(ids[0]);
+                });
 }
 
 function update(changes, id) {
-    return null;
+    return db("entries").where({ id: id })
+                .update(changes)
+                .then(() => {
+                    return findById(id);
+                });
 }
 
 function remove(id) {
-    return null;
+    return db("entries").where({ id: id }).del();
 }
