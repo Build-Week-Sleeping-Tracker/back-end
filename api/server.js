@@ -1,7 +1,8 @@
 const express = require("express");
 const helmet = require("helmet");
 const cors = require("helmet");
-const morgan = require("morgan");
+const morgan = process.env.NODE_ENV !== "production" ? require("morgan") : null;
+
 
 const authRouter = require("../auth/authRouter.js");
 const usersRouter = require("../users/usersRouter.js");
@@ -10,7 +11,9 @@ const authenticate = require("../auth/authenticate.js");
 const server = express();
 server.use(helmet());
 server.use(cors());
-server.use(morgan("dev"));
+if(morgan) {
+    server.use(morgan("dev"));
+}
 server.use(express.json());
 
 server.use("/api/auth", authRouter);
