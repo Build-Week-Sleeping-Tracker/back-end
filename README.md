@@ -197,3 +197,149 @@ Does not receive or return JSON
 
 
 ___
+
+<br><br>
+
+
+### Sleep Entries
+<br>
+
+| Method | URL            | Description                                                                   |
+| ------ | -------------- | ----------------------------------------------------------------------------- |
+| GET    | /api/sleep     | Returns an array of sleep entries for the logged on user.                     |
+| GET    | /api/sleep/:id | Returns the sleep entry by id for the logged on user.                         |
+| POST   | /api/sleep     | Creates new sleep entry for logged on user. Requires sleep start time and user id |
+| PUT    | /api/sleep/:id | Updates sleep entry by id for logged on user. Just provide the properties being changed |
+| DELETE | /api/sleep/:id | Deletes sleep entry by id for logged on user.                                 |
+
+<br>
+
+`GET /api/sleep`
+
+**Returns**
+```json
+[
+    {
+      "id": 1,
+      "sleep_start": 1597869337330,
+      "sleep_end": null,
+      "daytime_mood": 3,
+      "sleep_start_mood": 1,
+      "sleep_end_mood": null,
+      "sleep_time_total": null,
+      "user_id": 1
+    },
+    {
+      "id": 2,
+      "sleep_start": 1597869337330,
+      "sleep_end": 1597869337330,
+      "daytime_mood": 3,
+      "sleep_start_mood": 1,
+      "sleep_end_mood": 3,
+      "sleep_time_total": 3,
+      "user_id": 1
+    },
+
+]
+```
+
+<br>
+
+___
+<br>
+
+`GET /api/sleep/:id`
+
+**Returns**
+```json
+{
+    "id": 1,
+    "sleep_start": 1597869337330,
+    "sleep_end": null,
+    "daytime_mood": 3,
+    "sleep_start_mood": 1,
+    "sleep_end_mood": null,
+    "sleep_time_total": null,
+    "user_id": 1
+}
+```
+
+<br>
+
+___
+<br>
+
+`POST /api/sleep`
+
+**Receives**
+```json
+{
+    "sleep_start": 1597869337330,
+    "user_id": 1
+}
+```
+You may add any other property if have a value for them, otherwise, 
+only sleep_start and user_id are required
+
+<br>
+
+**Returns**
+```json
+{
+    "id": 1,
+    "sleep_start": 1597869337330,
+    "sleep_end": null,
+    "daytime_mood": 3,
+    "sleep_start_mood": 1,
+    "sleep_end_mood": null,
+    "sleep_time_total": null,
+    "user_id": 1
+}
+```
+
+<br>
+
+___
+<br>
+
+` PUT /api/sleep/:id`
+
+**Receives** (fields that do not change can be omitted)
+```json
+{
+    "id": 1,
+    "sleep_start": 1597869337330,
+    "sleep_end": null,
+    "daytime_mood": 3,
+    "sleep_start_mood": 1,
+    "sleep_end_mood": null,
+    "sleep_time_total": null,
+    "user_id": 1
+}
+```
+
+**Returns**
+```json
+{
+      "id": 1,
+      "sleep_start": 1597869337330,
+      "sleep_end": 1597869337330,
+      "daytime_mood": 3,
+      "sleep_start_mood": 1,
+      "sleep_end_mood": 3,
+      "sleep_time_total": 3,
+      "user_id": 1
+    }
+```
+
+<br>
+
+___
+<br>
+
+`DELETE /api/sleep/:id`
+
+Does not receive or return JSON
+
+**Returns**
+```- Status: 204 = No Content ```
