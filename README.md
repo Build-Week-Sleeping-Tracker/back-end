@@ -16,7 +16,7 @@
     - 3.1 [Authentication](https://github.com/Build-Week-Sleeping-Tracker/back-end#authentication) - Post requests for login and register of users
     - 3.2 [Restricted Endpoints](https://github.com/Build-Week-Sleeping-Tracker/back-end#restricted-endpoints-require-token)
         - 3.2.1 [Users Endpoints](https://github.com/Build-Week-Sleeping-Tracker/back-end#users-1) - All endpoints available for users table
-        -3.2.2 [Sleep Entries Endpoints](https://github.com/Build-Week-Sleeping-Tracker/back-end#sleep-entries) - All endpoints available for sleep entries table
+        - 3.2.2 [Sleep Entries Endpoints](https://github.com/Build-Week-Sleeping-Tracker/back-end#sleep-entries) - All endpoints available for sleep entries table
 
 <br>
 
