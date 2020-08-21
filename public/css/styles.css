@@ -77,7 +77,7 @@ header div {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+    padding: 0 15px;
 }
 
 header nav a {
@@ -150,4 +150,31 @@ footer p {
     max-width: 1200px;
     height: 100%;
     margin: 0 auto;
+}
+
+img {
+    width: 100%;
+    max-width: 600px;
+    min-width: 200px;
+}
+
+@media only screen and (max-width: 1100px) {
+
+    #documentation .content-nav,
+    #documentation hr {
+        display: none;
+    }
+
+    #documentation .content hr {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    header {
+        height: auto;
+    }
+    header div {
+        flex-direction: column;
+    }
 }
