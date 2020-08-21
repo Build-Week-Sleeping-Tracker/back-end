@@ -28,9 +28,34 @@
             <div class = "content-nav">
                 <div>
                     <h3>Contents</h3> 
+                    <a href = "#intro">Introduction</a>
+                    <hr>
+                    <a href = "#schema">
+                        Schema
+                        <ul>
+                            <li><a href = "#users-schema">Users</a></li>
+                            <li><a href = "#entries-schema">Entries</a></li>
+                        </ul>
+                    </a>
+                    <hr>
+                    <a href = "#api-endpoints">
+                        API Endpoints
+                        <ul>
+                            <li><a href = "#auth">Authentication</a></li>
+                            <li><a href = "#restricted-endpoints">
+                                Restricted Endpoints
+                                <ul>
+                                    <li><a href = "#users-endpoints">Users</a></li>
+                                    <li><a href = "#entries-endpoints">Sleep Entries</a></li>
+                                </ul>
+                            </a></li>
+                        </ul>
+                    </a>
                 </div>
                 
             </div>
+
+            <hr>
 
             <div class = "content">
                 <h3>This api is made to work with the sleep tracker app project built by a team consisting 
@@ -322,6 +347,174 @@
                 <br />
 
                 <h5>DELETE /api/users/:id</h5>
+                <p>Does not receive or return JSON</p>
+                <h4>Returns </h4>
+                <code>
+                    Status 204 No Content
+                </code>
+                
+                <br /><br />
+                <hr>
+                <br /><br />
+                
+
+                <h3 id = "entries-endpoints">Sleep Entries</h3>
+                <table>
+                    <tr>
+                        <th>Method</th>
+                        <th>URL</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/api/sleep</td>
+                        <td>Returns an array of sleep entries for the logged on user.</td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td>/api/sleep/:id</td>
+                        <td>Returns the sleep entry by id for the logged on user.</td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td>/api/sleep</td>
+                        <td>Creates new sleep entry for logged on user. Requires sleep start time and user id</td>
+                    </tr>
+                    <tr>
+                        <td>PUT</td>
+                        <td>/api/sleep/:id</td>
+                        <td>Updates sleep entry by id for logged on user. Just provide the properties being changed</td>
+                    </tr>
+                    <tr>
+                        <td>DELETE</td>
+                        <td>/api/sleep/:id</td>
+                        <td>Deletes sleep entry by id for logged on user.</td>
+                    </tr>
+                </table>
+
+                <h5>GET /api/sleep</h5>
+                <h4>Returns</h4>
+                <code>
+                    [
+                        <ul>
+                            <li>{
+                                <ul>
+                                    <li>"id": 1</li>
+                                    <li>"sleep_start": 1597869337330,</li>
+                                    <li>"sleep_end": null,</li>
+                                    <li>"daytime_mood": 3,</li>
+                                    <li>"sleep_start_mood": 1,</li>
+                                    <li>"sleep_end_mood": null,</li>
+                                    <li>"sleep_time_total": null,</li>
+                                    <li>"user_id": 1</li>
+                                </ul>
+                            },
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>{
+                                <ul>
+                                    <li>"id": 2</li>
+                                    <li>"sleep_start": 1597869337330,</li>
+                                    <li>"sleep_end": 1597869337330,</li>
+                                    <li>"daytime_mood": 3,</li>
+                                    <li>"sleep_start_mood": 1,</li>
+                                    <li>"sleep_end_mood": 3,</li>
+                                    <li>"sleep_time_total": 3,</li>
+                                    <li>"user_id": 1</li>
+                                </ul>
+                            },
+                            </li>
+                        </ul>
+
+                    ]
+                </code>
+
+                <h5>GET /api/sleep/:id</h5>
+                <h4>Returns</h4>
+                <code>
+                    {
+                        <ul>
+                            <li>"id": 1</li>
+                            <li>"sleep_start": 1597869337330,</li>
+                            <li>"sleep_end": null,</li>
+                            <li>"daytime_mood": 3,</li>
+                            <li>"sleep_start_mood": 1,</li>
+                            <li>"sleep_end_mood": null,</li>
+                            <li>"sleep_time_total": null,</li>
+                            <li>"user_id": 1</li>
+                        </ul>
+                    }
+                </code>
+
+                <br />
+
+                <h5>POST /api/sleep</h5>
+                <h4>Receives</h4>
+                <code>
+                    {
+                        <ul>
+                            <li>"sleep_start": 1597869337330,</li>
+                            <li>"user_id": 1</li>
+                        </ul>
+                    }
+                </code>
+                <p>You may add any other property if have a value for them, otherwise, only sleep_start and user_id are required</p>
+
+                <h4>Returns</h4>
+                <code>
+                    {
+                        <ul>
+                            <li>"id": 1</li>
+                            <li>"sleep_start": 1597869337330,</li>
+                            <li>"sleep_end": null,</li>
+                            <li>"daytime_mood": 3,</li>
+                            <li>"sleep_start_mood": 1,</li>
+                            <li>"sleep_end_mood": null,</li>
+                            <li>"sleep_time_total": null,</li>
+                            <li>"user_id": 1</li>
+                        </ul>
+                    }
+                </code>
+
+                <br />
+
+                <h5>PUT /api/sleep/:id</h5>
+                <h4>Receives (fields that do not change can be ommitted)</h4>
+                <code>
+                    {
+                        <ul>
+                            <li>"id": 1</li>
+                            <li>"sleep_start": 1597869337330,</li>
+                            <li>"sleep_end": null,</li>
+                            <li>"daytime_mood": 3,</li>
+                            <li>"sleep_start_mood": 1,</li>
+                            <li>"sleep_end_mood": null,</li>
+                            <li>"sleep_time_total": null,</li>
+                            <li>"user_id": 1</li>
+                        </ul>
+                    }
+                </code>
+
+                <h4>Returns</h4>
+                <code>
+                    {
+                        <ul>
+                            <li>"id": 1</li>
+                            <li>"sleep_start": 1597869337330,</li>
+                            <li>"sleep_end": 1597869337330,</li>
+                            <li>"daytime_mood": 3,</li>
+                            <li>"sleep_start_mood": 1,</li>
+                            <li>"sleep_end_mood": 3,</li>
+                            <li>"sleep_time_total": 3,</li>
+                            <li>"user_id": 1</li>
+                        </ul>
+                    }
+                </code>
+
+                <br />
+
+                <h5>DELETE /api/sleep/:id</h5>
                 <p>Does not receive or return JSON</p>
                 <h4>Returns </h4>
                 <code>

@@ -61,6 +61,7 @@ h5 {
 header {
     height: 60px;
     background-color: #ccc;
+    width: 100%;
 }
 
 
@@ -72,20 +73,30 @@ header div {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    
 }
 
 header nav a {
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 20px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 800;
+}
+
+header nav a:hover {
+    color: #fbfbfb;
+    
 }
 
 section {
+    
     width: 100%;
     max-width: 1200px;
     min-height: 87vh;
     margin: 0 auto;
     text-align: center;
-    padding: 30px 120px;
+    padding: 0px 120px;
     background-color: #fff;
 }
 
@@ -97,12 +108,21 @@ section {
 #documentation {
     display: flex;
     text-align: left;
-    padding: 30px 20px;
+    padding: 0px 20px;
 }
 
 #documentation .content-nav {
     width: 20%;
     padding: 0 20px;
+}
+
+#documentation .content-nav a {
+    color: #4527cf;
+}
+
+#documentation .content-nav a:hover {
+    color: #333;
+    text-decoration: none;
 }
 
 #documentation .content-nav div {
