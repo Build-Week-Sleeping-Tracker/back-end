@@ -80,7 +80,7 @@ Deployed to Heroku: [Backend Api](https://webpt15-sleep-tracker-api.herokuapp.co
 BASE URL: https://webpt15-sleep-tracker-api.herokuapp.com
 
 To use the api, requests are called with base url followed by the endpoint path.
-For example: **<base url>/api/users**
+For example: **[base url]/api/users**
 
 Most endpoints receive and return JSON
 <br><br>
