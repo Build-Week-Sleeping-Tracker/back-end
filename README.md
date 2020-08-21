@@ -77,6 +77,11 @@ If value is > 4 it will be changed to 4, if < 1 it will be set to 1.
 # API Endpoints
 Deployed to Heroku: [Backend Api](https://webpt15-sleep-tracker-api.herokuapp.com)
 
+BASE URL: https://webpt15-sleep-tracker-api.herokuapp.com
+
+To use the api, requests are called with base url followed by the endpoint path.
+For example: **<base url>/api/users**
+
 Most endpoints receive and return JSON
 <br><br>
 
