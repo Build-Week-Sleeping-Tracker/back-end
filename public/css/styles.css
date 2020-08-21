@@ -13,17 +13,18 @@ body {
     flex-direction: column;
     justify-content: space-between;
     min-height: 100vh;
-    background-color: #fbfbfb;
-    
+    background-color: #1A1C1E; /* #FBFBFB */
+    color: #D8D4CF;
 }
 
 code {
     display: block;
-    background: #333232;
+    background: #333232; 
     font-size: 16px;
     padding: 10px;
     color: greenyellow;
     overflow-x: scroll;
+    
 }
 
 code ul {
@@ -37,7 +38,7 @@ table {
 }
 
 td, th {
-    border: 1px solid #dddddd;
+    border: 1px solid #404548;
     text-align: left;
     padding: 8px;
 }
@@ -47,7 +48,7 @@ th {
 }
 
 tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #2b2f31;
 }
 
 h1 {
@@ -58,9 +59,12 @@ h5 {
     font-style: italic;
 }
 
+a {
+    color: #3391FF;
+}
 header {
     height: 60px;
-    background-color: #ccc;
+    background-color: #35393B;
     width: 100%;
 }
 
@@ -79,7 +83,7 @@ header div {
 header nav a {
     display: inline-block;
     margin-left: 20px;
-    color: #333;
+    color: #C8C3BC; /* #333 */
     text-decoration: none;
     font-weight: 800;
 }
@@ -97,7 +101,7 @@ section {
     margin: 0 auto;
     text-align: center;
     padding: 0px 120px;
-    background-color: #fff;
+    background-color: #181a1b; /* #fff */
 }
 
 #about {
@@ -117,7 +121,7 @@ section {
 }
 
 #documentation .content-nav a {
-    color: #4527cf;
+    color: #3391FF;
 }
 
 #documentation .content-nav a:hover {
