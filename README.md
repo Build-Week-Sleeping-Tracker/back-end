@@ -4,6 +4,20 @@
 
 <br >
 
+## Table of Contents
+
+1) [Introduction](https://github.com/Build-Week-Sleeping-Tracker/back-end#introduction) - Describe the purpose of this repository and information about using a .env file.
+2) [Schema](https://github.com/Build-Week-Sleeping-Tracker/back-end#schema) - Shows the tables on the database with the field data types, and mentions required fields
+    - 2.1 [Users Schema](https://github.com/Build-Week-Sleeping-Tracker/back-end#users)
+    - 2.2 [Entries Schema](https://github.com/Build-Week-Sleeping-Tracker/back-end#entries)
+3) [API Endpoints](https://github.com/Build-Week-Sleeping-Tracker/back-end#api-endpoints) - Documentation for the endpoints available in the api
+    - 3.1 [Authentication](https://github.com/Build-Week-Sleeping-Tracker/back-end#authentication) - Post requests for login and register of users
+    - 3.2 [Restricted Endpoints](https://github.com/Build-Week-Sleeping-Tracker/back-end#restricted-endpoints-require-token)
+        - 3.2.1 [Users Endpoints](https://github.com/Build-Week-Sleeping-Tracker/back-end#users-1) - All endpoints available for users table
+        - 3.2.2 [Sleep Entries Endpoints](https://github.com/Build-Week-Sleeping-Tracker/back-end#sleep-entries) - All endpoints available for sleep entries table
+
+<br>
+
 ## Introduction
 <br>
 
