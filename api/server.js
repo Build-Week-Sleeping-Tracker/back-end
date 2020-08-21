@@ -1,6 +1,6 @@
 const express = require("express");
 const helmet = require("helmet");
-const cors = require("helmet");
+const cors = require("cors");
 const morgan = process.env.NODE_ENV !== "production" ? require("morgan") : null;
 const path = require("path");
 
