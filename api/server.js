@@ -3,6 +3,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const morgan = process.env.NODE_ENV !== "production" ? require("morgan") : null;
 const path = require("path");
+const favicon = require("serve-favicon");
 
 const authenticate = require("../auth/authenticate.js");
 const authRouter = require("../auth/authRouter.js");
@@ -11,8 +12,10 @@ const entriesRouter = require("../entries/entriesRouter.js");
 
 
 const server = express();
+server.use(favicon(path.join(__dirname, "../public/images", "favicon.ico")));
 server.use(helmet());
 server.use(cors());
+
 if(morgan) {
     server.use(morgan("dev"));
 }
