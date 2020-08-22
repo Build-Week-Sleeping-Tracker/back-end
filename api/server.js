@@ -24,7 +24,11 @@ server.use("/api/sleep", authenticate, entriesRouter);
 
 server.use(express.static("public"));
 
-server.use((req, res, next) => next({ code: 404, message: `The ${req.method} method for ${req.url} does not exist. Check the url and try again` }));
+server.use((req, res, next) => {
+    //next({ code: 404, message: `The ${req.method} method for ${req.url} does not exist. Check the url and try again` })
+
+    res.status(404).sendFile(path.join(__dirname, "../public", "not-found.html"));
+});
 
 server.use((err, req, res, next) => {
     res.status(err.code).json(err);
