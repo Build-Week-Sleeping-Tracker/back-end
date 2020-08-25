@@ -85,10 +85,14 @@ describe("Users Router", () => {
             expect(res.status).toBe(204);
         });
 
+        it("cleans the users table", async () => {
+            await db("users").truncate();
+        });
         
+        it("creates test user", async () => {
+            const res = await request(server).post("/api/auth/register")
+                                .send(testUser);
+            token = res.body.token;
+        });
     });   
-
-    it("cleans the users table", async () => {
-        await db("users").truncate();
-    });
 });

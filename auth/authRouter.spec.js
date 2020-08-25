@@ -48,10 +48,6 @@ describe("Auth Router", () => {
 
         
     });
-
-    it("cleans out the users table", async () => {
-        await db("users").truncate();
-    });
     
     
 });

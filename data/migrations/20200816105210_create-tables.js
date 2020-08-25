@@ -13,10 +13,7 @@ exports.up = function(knex) {
                 tbl.increments();
                 tbl.datetime("sleep_start").notNullable().unique();
                 tbl.datetime("sleep_end").unique();
-                tbl.integer("daytime_mood");
-                tbl.integer("sleep_start_mood");
-                tbl.integer("sleep_end_mood");
-                tbl.time("sleep_time_total");
+                tbl.float("sleep_time_total", 2);
                 tbl.integer("user_id")
                     .unsigned()
                     .notNullable()
@@ -24,10 +21,24 @@ exports.up = function(knex) {
                     .onUpdate("CASCADE")
                     .onDelete("CASCADE");
             })
+            .createTable("moods", tbl => {
+                tbl.increments();
+                tbl.integer("entry_id")
+                    .unsigned()
+                    .notNullable()
+                    .unique()
+                    .references("entries.id")
+                    .onUpdate("CASCADE")
+                    .onDelete("CASCADE");
+                tbl.enu("before_sleep", [1, 2, 3, 4]);
+                tbl.enu("after_sleep", [1, 2, 3, 4]);
+                tbl.enu("daytime", [1, 2, 3, 4]);
+            })
 };
 
 exports.down = function(knex) {
     return knex.schema
+            .dropTableIfExists("moods")
             .dropTableIfExists("entries")
             .dropTableIfExists("users");
 };

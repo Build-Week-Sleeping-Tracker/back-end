@@ -4,7 +4,7 @@ const Entries = require("./entries-model.js");
 router.get("/", (req, res, next) => {
     Entries.findAll()
         .then(entries => {
-            const userEntries = entries.map(entry => entry.user_id === req.jwt.subject);
+            const userEntries = entries.filter(entry => entry.user_id === req.jwt.subject);
             res.status(200).json(userEntries);
         })
         .catch(err => next({ code: 500, message: "Error retrieving entries", err }));
@@ -17,7 +17,11 @@ router.post("/", (req, res, next) => {
     if(!(entry.sleep_start && entry.user_id)) {
         next({ code: 400, message: "Missing required data: Sleep Start Date and Time, User Id" });
     } else {
-        Entries.add(entry)
+        Entries.add({
+                sleep_start: new Date(entry.sleep_start),
+                sleep_end: new Date(entry.sleep_end),
+                user_id: entry.user_id
+            }, entry.moods)
             .then(entry => {
                 res.status(201).json(entry);
             })
@@ -30,12 +34,14 @@ router.get("/:id", (req, res, next) => {
 
     Entries.findById(id)
         .then(entry => {
-            if(entry && entry.user_id === req.jwt.subject) {
-                res.status(200).json(entry);
-            } else if (!entry) {
-                next({ code: 404, message: "Sleep Data not found!"})
+            if(entry) {
+                if(entry.user_id === req.jwt.subject) {
+                    res.status(200).json(entry);
+                } else {
+                    next({ code: 401, message: "The sleep id does not belong to the logged on account" });
+                }
             } else {
-                next({ code: 401, message: "The sleep id does not belong to the logged on account" });
+                next({ code: 404, message: "Sleep Data not found!"})
             }
         })
         .catch(err => next({ code: 500, message: "Error retrieving sleep entry", err }));
@@ -50,11 +56,14 @@ router.put("/:id", (req, res, next) => {
             if(entry && entry.user_id === req.jwt.subject) {
                 const updates = {
                     ...entry,
-                    ...changes,
-                    sleep_time_total: changes.sleep_end ? parseInt((changes.sleep_end - entry.sleep_start) / 1000 / 60 / 60) : null
+                    ...changes,                    
+                    //sleep_time_total: changes.sleep_end ? parseInt((changes.sleep_end - entry.sleep_start) / 1000 / 60 / 60) : null
                 }
 
-                Entries.update(updates, id)
+                updates.sleep_start = new Date(updates.sleep_start);
+                updates.sleep_end =  new Date(updates.sleep_end);
+
+                Entries.update(updates, entry.moods, id)
                     .then(updated => {
                         res.status(200).json(updated);
                     })

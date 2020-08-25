@@ -10,7 +10,52 @@ module.exports = {
 }
 
 function findAll() {
-    return db("entries");
+    if(process.env.NODE_ENV === "production") {
+        // For PostgreSQL database
+        return db("entries as e")
+            .with("md", qb => {
+                qb.select(db.raw("(SELECT entry_id from moods) entry_id"), db.raw("ROW_TO_JSON(m) as moods"))
+                    .from(db.raw("(select before_sleep, after_sleep, daytime from moods) m"))
+            })
+            .leftJoin("md", "md.entry_id", "e.id")
+            .select("e.*", "md.moods")
+            .then(entries => {
+                return entries.map(entry => {
+                    if(!entry.moods) {
+                        entry.moods = {
+                            before_sleep: null,
+                            after_sleep: null,
+                            daytime: null
+                        }
+                    }
+                    return entry;
+                })
+            })
+    } else {
+        // For SQLITE database
+        return db("entries as e")
+            .with("md", qb => {
+                qb.select("entry_id", db.raw("JSON_OBJECT('before_sleep', m.before_sleep, 'after_sleep', m.after_sleep, 'daytime', m.daytime) as moods"))
+                    .from("moods as m")
+            })
+            .leftJoin("md", "md.entry_id", "e.id")
+            .select("e.*", "md.moods")
+            .then(entries => {
+                return entries.map(entry => {
+                    
+                    if(entry.moods) {
+                        entry.moods = JSON.parse(entry.moods);
+                    } else {
+                        entry.moods = {
+                            before_sleep: null,
+                            after_sleep: null,
+                            daytime: null
+                        }
+                    }
+                    return entry;
+                })
+            });
+    }
 }
 
 function findBy(filter) {
@@ -18,59 +63,120 @@ function findBy(filter) {
 }
 
 function findById(id) {
-    return db("entries").where({ id: id }).first();
+    if(process.env.NODE_ENV === "production") {
+        // For PostgreSQL database
+        return db("entries as e")
+            .with("md", qb => {
+                qb.select(db.raw("(SELECT entry_id from moods) entry_id"), db.raw("ROW_TO_JSON(m) as moods"))
+                    .from(db.raw("(select before_sleep, after_sleep, daytime from moods) m"))
+            })
+            .leftJoin("md", "md.entry_id", "e.id")
+            .select("e.*", "md.moods")
+            .where({ id: id })
+            .first()
+            .then(entry => {
+                if(entry) {
+                    if(!entry.moods) {
+                        entry.moods = {
+                            before_sleep: null,
+                            after_sleep: null,
+                            daytime: null
+                        }
+                    }
+                    return entry;
+                } else {
+                    return null;
+                }
+                
+            })
+    } else {
+        // For SQLITE Database
+        return db("entries as e")
+                .with("md", qb => {
+                    qb.select("entry_id", db.raw("JSON_OBJECT('before_sleep', m.before_sleep, 'after_sleep', m.after_sleep, 'daytime', m.daytime) as moods"))
+                    .from("moods as m")
+                })
+                .leftJoin("md", "md.entry_id", "e.id")
+                .select("e.*", "md.moods")
+                .where({ id: id })
+                .first()
+                .then(entry => {
+                    if(entry) {
+                        if(entry.moods) {
+                            entry.moods = JSON.parse(entry.moods);
+                        } else {
+                            entry.moods = {
+                                before_sleep: null,
+                                after_sleep: null,
+                                daytime: null
+                            }
+                        }
+                        return entry;
+                    } else {
+                        return null;
+                    }
+                });
+    }
 }
 
-function add(entry) {
-    validateMoodValues(entry);
+function add(entry, moods) {
+    return db.transaction(trx => {
+        return trx
+            .insert({
+                sleep_start: entry.sleep_start,
+                sleep_end: entry.sleep_end,
+                sleep_time_total: entry.sleep_end - entry.sleep_start < 0 ? null : (entry.sleep_end - entry.sleep_start) / 1000 / 60 / 60,
+                user_id: entry.user_id
+            }, "id")
+            .into("entries")
+            .then(async ([id]) => {
+                if(!moods) {
+                    await db("moods").insert({entry_id: id, before_sleep: null, after_sleep: null, daytime: null}).transacting(trx);
+                    return id;
+                }
 
-    return db("entries").insert(entry, "id")
-                .then(ids => {
-                    return findById(ids[0]);
-                });
+                moods = {
+                    ...moods,
+                    entry_id: id
+                }
+
+                await db("moods").insert(moods).transacting(trx);
+                return id;
+            });
+    })
+    .then(id => findById(id));
 }
 
-function update(changes, id) {
+function update(entry, moods, id) {
+    return db.transaction(trx => {
+        return db("entries")
+            .transacting(trx)
+            .where({id: id})
+            .update({
+                sleep_start: entry.sleep_start,
+                sleep_end: entry.sleep_end < entry.sleep_start ? null : entry.sleep_end,
+                sleep_time_total: entry.sleep_end - entry.sleep_start < 0 ? null : (entry.sleep_end - entry.sleep_start) / 1000 / 60 / 60,
+                user_id: entry.user_id
+            }, "id")
+            .then(async () => {
+                if(!entry.moods) return id;
 
-    validateMoodValues(changes);
+                await db("moods").transacting(trx).where({entry_id: entry.id}).del();
 
-    return db("entries").where({ id: id })
-                .update(changes)
-                .then(() => {
-                    return findById(id);
-                });
+                const moodChanges = {
+                    ...moods,
+                    ...entry.moods,
+                    entry_id: id
+                    
+                }
+                
+                await db("moods").insert(moodChanges).transacting(trx);
+                return id;
+            });
+    })
+    .then(id => findById(id))
 }
 
 function remove(id) {
     return db("entries").where({ id: id }).del();
-}
-
-
-
-/* validateMoodValues() - Checks mood values to make sure are within range of 1 - 4, or set to null
-*  @params - entry - takes the entry object to validate
-*/
-function validateMoodValues(entry) {
-    if (entry.daytime_mood && (entry.daytime_mood < 1 || entry.daytime_mood > 4) ) {
-        if(entry.daytime_mood < 1) {
-            entry.daytime_mood = 1;
-        } else if(entry.daytime_mood > 4) {
-            entry.daytime_mood = 4;
-        }
-    }
-
-    if (entry.sleep_start_mood && (entry.sleep_start_mood < 1 || entry.sleep_start_mood > 4) ) {
-        if(entry.sleep_start_mood < 1) {
-            entry.sleep_start_mood = 1;
-        } else if(entry.sleep_start_mood > 4) {
-            entry.sleep_start_mood = 4;
-        }
-    }
-    if (entry.sleep_end_mood && (entry.sleep_end_mood < 1 || entry.sleep_end_mood > 4) ) {
-        if(entry.sleep_end_mood < 1) {
-            entry.sleep_end_mood = 1;
-        } else if(entry.sleep_end_mood > 4) {
-            entry.sleep_end_mood = 4;
-        } 
-    }
 }

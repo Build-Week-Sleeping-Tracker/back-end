@@ -3,9 +3,6 @@ const server = require("../api/server.js");
 const db = require("../data/dbConfig.js");
 
 const testUser = {
-    fname: "Test",
-    lname: "Tester",
-    email: "tester@testing.com",
     username: "tester",
     password: "1234"
 }
@@ -14,8 +11,8 @@ let token = null;
 describe("Sleep Entries Router", () => {
     
 
-    it("creates test user", async () => {
-        const res = await request(server).post("/api/auth/register")
+    it("logins test user", async () => {
+        const res = await request(server).post("/api/auth/login")
                             .send(testUser);
         token = res.body.token;
     });
@@ -110,12 +107,13 @@ describe("Sleep Entries Router", () => {
 
         test("should return status 404 Not Found", async () => {
             const res = (await request(server).get("/api/sleep/1").auth(token, {type: "bearer"}));
-
+            
             expect(res.status).toBe(404);
         });
+
+        it("Resets the entries table", async () => await db("entries").truncate());
     });
    
-    it("Cleans the entries table", async () => await db("entries").truncate());
-    it("Cleans the users table", async () => await db("users").truncate());
+    
 
 });
