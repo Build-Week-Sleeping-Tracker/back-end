@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Users = require("./users-model.js");
-const validate = require("../api/validate.js");
+const validate = require("../validate.js");
 
 router.use("/:id", validate.user);
 

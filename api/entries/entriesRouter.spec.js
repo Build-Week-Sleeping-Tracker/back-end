@@ -1,6 +1,6 @@
 const request = require("supertest");
-const server = require("../api/server.js");
-const db = require("../data/dbConfig.js");
+const server = require("../../server.js");
+const db = require("../../data/dbConfig.js");
 
 const testUser = {
     username: "tester",
