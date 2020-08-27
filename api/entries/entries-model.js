@@ -137,12 +137,12 @@ function add(entry, moods) {
                     return id;
                 }
 
-                /* moods = {
+                moods = {
                     ...moods,
                     entry_id: id
                 }
 
-                await db("moods").insert(moods).transacting(trx); */
+                await db("moods").insert(moods).transacting(trx);
                 return id;
             });
     })
