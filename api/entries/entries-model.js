@@ -14,8 +14,8 @@ function findAll() {
         // For PostgreSQL database
         return db("entries as e")
             .with("md", qb => {
-                qb.select(db.raw("(SELECT entry_id from moods) entry_id"), db.raw("ROW_TO_JSON(m) as moods"))
-                    .from(db.raw("(select before_sleep, after_sleep, daytime from moods) m"))
+                qb.select("m.entry_id as entry_id", db.raw("JSON_BUILD_OBJECT('before_sleep', m.before_sleep, 'after_sleep', m.after_sleep, 'daytime', m.daytime) as moods"))
+                    .from("moods as m")
             })
             .leftJoin("md", "md.entry_id", "e.id")
             .select("e.*", "md.moods")
@@ -67,8 +67,8 @@ function findById(id) {
         // For PostgreSQL database
         return db("entries as e")
             .with("md", qb => {
-                qb.select(db.raw("(SELECT entry_id from moods) entry_id"), db.raw("ROW_TO_JSON(m) as moods"))
-                    .from(db.raw("(select before_sleep, after_sleep, daytime from moods) m"))
+                qb.select("m.entry_id as entry_id", db.raw("JSON_BUILD_OBJECT('before_sleep', m.before_sleep, 'after_sleep', m.after_sleep, 'daytime', m.daytime) as moods"))
+                    .from("moods as m")
             })
             .leftJoin("md", "md.entry_id", "e.id")
             .select("e.*", "md.moods")
