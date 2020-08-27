@@ -13,7 +13,7 @@ exports.up = function(knex) {
                 tbl.increments();
                 tbl.timestamp("sleep_start").notNullable().unique();
                 tbl.timestamp("sleep_end").unique();
-                tbl.float("sleep_time_total", 2);
+                tbl.float("sleep_time_total");
                 tbl.integer("user_id")
                     .unsigned()
                     .notNullable()
