@@ -11,8 +11,8 @@ exports.up = function(knex) {
             })
             .createTable("entries", tbl => {
                 tbl.increments();
-                tbl.datetime("sleep_start").notNullable().unique();
-                tbl.datetime("sleep_end").unique();
+                tbl.timestamp("sleep_start").notNullable().unique();
+                tbl.timestamp("sleep_end").unique();
                 tbl.float("sleep_time_total", 2);
                 tbl.integer("user_id")
                     .unsigned()

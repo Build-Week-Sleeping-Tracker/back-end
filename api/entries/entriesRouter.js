@@ -18,8 +18,8 @@ router.post("/", (req, res, next) => {
         next({ code: 400, message: "Missing required data: Sleep Start Date and Time, User Id" });
     } else {
         Entries.add({
-                sleep_start: new Date(entry.sleep_start),
-                sleep_end: new Date(entry.sleep_end),
+                sleep_start: entry.sleep_start,
+                sleep_end: entry.sleep_end,
                 user_id: entry.user_id
             }, entry.moods)
             .then(entry => {
