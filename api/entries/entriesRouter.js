@@ -60,9 +60,6 @@ router.put("/:id", (req, res, next) => {
                     //sleep_time_total: changes.sleep_end ? parseInt((changes.sleep_end - entry.sleep_start) / 1000 / 60 / 60) : null
                 }
 
-                /* updates.sleep_start = new Date(updates.sleep_start);
-                updates.sleep_end =  new Date(updates.sleep_end); */
-
                 Entries.update(updates, entry.moods, id)
                     .then(updated => {
                         res.status(200).json(updated);

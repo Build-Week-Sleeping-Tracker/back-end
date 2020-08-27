@@ -120,12 +120,14 @@ function findById(id) {
 }
 
 function add(entry, moods) {
+    const time_total = new Date(entry.sleep_end).getTime() - new Date(entry.sleep_start).getTime();
+
     return db.transaction(trx => {
         return trx
             .insert({
                 sleep_start: entry.sleep_start,
                 sleep_end: entry.sleep_end,
-                sleep_time_total: entry.sleep_end - entry.sleep_start < 0 ? null : (entry.sleep_end - entry.sleep_start) / 1000 / 60 / 60,
+                sleep_time_total: time_total < 0 ? null : time_total / 1000 / 60 / 60,
                 user_id: entry.user_id
             }, "id")
             .into("entries")
@@ -148,6 +150,8 @@ function add(entry, moods) {
 }
 
 function update(entry, moods, id) {
+    const time_total = new Date(entry.sleep_end).getTime() - new Date(entry.sleep_start).getTime();
+    
     return db.transaction(trx => {
         return db("entries")
             .transacting(trx)
@@ -155,7 +159,7 @@ function update(entry, moods, id) {
             .update({
                 sleep_start: entry.sleep_start,
                 sleep_end: entry.sleep_end < entry.sleep_start ? null : entry.sleep_end,
-                sleep_time_total: entry.sleep_end - entry.sleep_start < 0 ? null : (entry.sleep_end - entry.sleep_start) / 1000 / 60 / 60,
+                sleep_time_total: time_total < 0 ? null : time_total / 1000 / 60 / 60,
                 user_id: entry.user_id
             }, "id")
             .then(async () => {
