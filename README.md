@@ -257,7 +257,7 @@ ___
 [
     {
       "id": 1,
-      "sleep_start": 1597869337330,
+      "sleep_start": "2020-08-25T22:30:00.000Z",
       "sleep_end": null,
       "sleep_time_total": null,
       "user_id": 1,
@@ -269,9 +269,9 @@ ___
     },
     {
       "id": 2,
-      "sleep_start": 1597869337330,
-      "sleep_end": 1597869337330,
-      "sleep_time_total": 3,
+      "sleep_start": "2020-08-25T22:30:00.000Z",
+      "sleep_end": "2020-08-265T05:30:00.000Z",
+      "sleep_time_total": 7,
       "user_id": 1,
       "moods": {
           "before_sleep": "1",
@@ -294,7 +294,7 @@ ___
 ```json
 {
     "id": 1,
-    "sleep_start": 1597869337330,
+    "sleep_start": "2020-08-25T22:30:00.000Z",
     "sleep_end": null,
     "sleep_time_total": null,
     "user_id": 1,
@@ -316,8 +316,8 @@ ___
 **Receives**
 ```json
 {
-    "sleep_start": 1597869337330,
-    "sleep_end": 1597816846321,
+    "sleep_start": "2020-08-25 22:30",
+    "sleep_end": "2020-08-26 05:30",
     "user_id": 1,
     "moods": {
         "before_sleep": "4",
@@ -334,7 +334,7 @@ ___
 ```json
 {
     "id": 1,
-    "sleep_start": 1597869337330,
+    "sleep_start": "2020-08-25T22:30:00.000Z",
     "sleep_end": null,
     "sleep_time_total": null,
     "user_id": 1,
@@ -356,8 +356,8 @@ ___
 **Receives** (fields that do not change can be omitted)
 ```json
 {
-    "sleep_start": 1597869337330,
-    "sleep_end": 1597816846321,
+    "sleep_start": "2020-08-25 22:30",
+    "sleep_end": "2020-08-26 05:30",
     "user_id": 1,
     "moods": {
         "before_sleep": "4",
@@ -371,9 +371,9 @@ ___
 ```json
 {
     "id": 1,
-    "sleep_start": 1597869337330,
-    "sleep_end": null,
-    "sleep_time_total": null,
+    "sleep_start": "2020-08-25T22:30:00.000Z",
+    "sleep_end": "2020-08-26T05:30:00.000Z",
+    "sleep_time_total": 7,
     "user_id": 1,
     "moods": {
         "before_sleep": "4",
