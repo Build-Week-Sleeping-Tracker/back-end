@@ -4,6 +4,11 @@
 
 <br >
 
+If cloning this project, make sure to add a .env file to your project with at least the JWT_SECRET path to be used by the jsonwebtoken
+```
+    JWT_SECRET=whatever your secret is goes here.
+```
+
 ## Table of Contents
 
 1) [Introduction](https://github.com/Build-Week-Sleeping-Tracker/back-end#introduction) - Describe the purpose of this repository and information about using a .env file.
