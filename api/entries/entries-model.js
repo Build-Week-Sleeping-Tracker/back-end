@@ -19,6 +19,7 @@ function findAll() {
             })
             .leftJoin("md", "md.entry_id", "e.id")
             .select("e.*", "md.moods")
+            .orderBy("e.sleep_start")
             .then(entries => {
                 return entries.map(entry => {
                     if(!entry.moods) {
