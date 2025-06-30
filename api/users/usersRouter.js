@@ -10,6 +10,15 @@ router.use("/:id", validate.user);
         .catch(err => next({ code: 500, message: "Error retrieving users", err }));
 }); */
 
+router.get("/me", (req, res, next) => {
+    Users.findAll()
+        .then(users => {
+            const user = users.filter(user => user.id === req.jwt.subject);
+            res.status(200).json(user);
+        })
+        .catch(err => next({ code: 500, message: "Error retrieving user", err }));
+});
+
 router.get("/:id", (req, res, next) => {
     const user = req.user;
     res.status(200).json(user);
