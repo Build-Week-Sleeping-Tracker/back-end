@@ -7,9 +7,9 @@ router.get("/me", (req, res, next) => {
     
     Users.findAll()
         .then(users => {
-            const users = users.filter(user => user.id === req.jwt.subject);
+            const filtered = users.filter(user => user.id === req.jwt.subject);
             const user = {
-                ...users[0],
+                ...filtered[0],
                 token: token
             }
             res.status(200).json(user);
