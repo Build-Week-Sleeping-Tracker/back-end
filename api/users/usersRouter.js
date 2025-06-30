@@ -3,10 +3,16 @@ const Users = require("./users-model.js");
 const validate = require("../validate.js");
 
 router.get("/me", (req, res, next) => {
+    const [authType, token] = req.headers.authorization.split(" ");
+    
     Users.findAll()
         .then(users => {
-            const user = users.filter(user => user.id === req.jwt.subject);
-            res.status(200).json(user[0]);
+            const users = users.filter(user => user.id === req.jwt.subject);
+            const user = {
+                ...users[0],
+                token: token
+            }
+            res.status(200).json(user);
         })
         .catch(err => next({ code: 500, message: "Error retrieving user", err }));
 });
