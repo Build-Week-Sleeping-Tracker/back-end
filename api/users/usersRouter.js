@@ -6,7 +6,7 @@ router.get("/me", (req, res, next) => {
     Users.findAll()
         .then(users => {
             const user = users.filter(user => user.id === req.jwt.subject);
-            res.status(200).json(user);
+            res.status(200).json(user[0]);
         })
         .catch(err => next({ code: 500, message: "Error retrieving user", err }));
 });
